@@ -1,0 +1,49 @@
+name: dbt CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: dbt_ci
+          POSTGRES_PASSWORD: dbt_ci
+          POSTGRES_DB: dbt_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U dbt_ci"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }}/ci
+      PGPASSWORD: dbt_ci
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dbt-postgres
+        run: pip install dbt-postgres
+
+      - name: Seed raw schema (simulates upstream ingestion)
+        run: psql -h localhost -U dbt_ci -d dbt_ci -f ci/seed_raw.sql
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: dbt build
+        run: dbt build

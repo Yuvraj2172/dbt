@@ -1,0 +1,12 @@
+dbt_learning:
+  target: ci
+  outputs:
+    ci:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: dbt_ci
+      password: dbt_ci
+      dbname: dbt_ci
+      schema: public
+      threads: 4
