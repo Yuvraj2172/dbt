@@ -3,5 +3,6 @@ SELECT
     customer_id,
     order_date,
     status,
-    amount
+    amount,
+    _loaded_at
 FROM {{ source('ecommerce', 'raw_orders') }}
