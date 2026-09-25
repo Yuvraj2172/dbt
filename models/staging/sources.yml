@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: ecommerce
+    schema: raw
+    description: "Raw order and customer data landed by the upstream ecommerce ingestion pipeline, before any dbt transformation."
+    tables:
+      - name: raw_orders
+        description: "One row per order, as landed by the upstream system. Includes cancelled/returned orders — no filtering applied at this stage."
+      - name: raw_customers
+        description: "One row per customer, as landed by the upstream system."

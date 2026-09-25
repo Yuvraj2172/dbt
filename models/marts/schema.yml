@@ -1,0 +1,26 @@
+version: 2
+
+models: 
+  - name: fct_orders
+    description: "One row per order, at full grain, with derived flags"
+    columns:
+     - name: order_id
+       description: "Primary key of the order"
+       data_tests:
+        - unique
+        - not_null
+     - name: customer_id
+       description: "Foreign key to dim_customers"
+       data_tests:
+        - relationships:
+            arguments:
+              to: ref('dim_customers')
+              field: customer_id
+  - name: dim_customers
+    description: "One row per customer, with descriptive attributes"
+    columns:
+      - name: customer_id
+        description: "Primary key of the customer"
+        data_tests:
+          - unique
+          - not_null

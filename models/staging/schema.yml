@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_ecommerce__orders
+    description: "One row per order, lightly cleaned from the raw ecommerce source. No business logic or filtering applied."
+    columns:
+      - name: order_id
+        description: "Primary key of the order"
+      - name: customer_id
+        description: "Foreign key to the customer who placed the order"
+      - name: order_date
+        description: "Date the order was placed"
+      - name: status
+        description: "Order status as recorded by the source system (e.g. completed, cancelled, returned)"
+      - name: amount
+        description: "Order total amount"
+
+  - name: stg_ecommerce__customers
+    description: "One row per customer, lightly cleaned from the raw ecommerce source."
+    columns:
+      - name: customer_id
+        description: "Primary key of the customer"
+      - name: customer_name
+        description: "Customer's full name"
+      - name: email
+        description: "Customer's email address"
+      - name: region
+        description: "Customer's geographic region"
+      - name: signup_date
+        description: "Date the customer signed up"
