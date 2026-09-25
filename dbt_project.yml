@@ -26,9 +26,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
-# In this example config, we tell dbt to build all models in the example/
-# directory as views. These settings can be overridden in the individual model
-# files using the `{{ config(...) }}` macro.
+# staging/ builds as views, marts/ builds as tables. Overridden per-model
+# via the `{{ config(...) }}` macro where needed (e.g. fct_orders is incremental).
 models:
   dbt_learning:
     marts:

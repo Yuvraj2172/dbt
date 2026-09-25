@@ -1,7 +1,7 @@
-SELECT 
+SELECT
     customer_id,
-    customer_name,
-    email,
-    region,
+    trim(customer_name) as customer_name,
+    lower(trim(email)) as email,
+    trim(region) as region,
     signup_date
 FROM {{source('ecommerce', 'raw_customers')}}

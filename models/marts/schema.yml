@@ -24,3 +24,15 @@ models:
         data_tests:
           - unique
           - not_null
+
+  - name: customer_order_summary
+    description: "One row per customer, aggregating their non-cancelled orders (total orders, total spent, average order value, last order date)."
+    columns:
+      - name: customer_id
+        description: "Foreign key to dim_customers"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: order_status_breakdown
+    description: "Single-row summary of total order amount by status (completed, cancelled, returned), generated via the order_status_breakdown macro."
